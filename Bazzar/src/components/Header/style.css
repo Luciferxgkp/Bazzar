@@ -1,0 +1,149 @@
+.header{
+  position: absolute;
+  width: 100%;
+  height: 44px;
+  /* padding-left: 44px; */
+  top: 25px;
+  /* background-color: black; */
+}
+.row{
+  display: flex;
+  height: 664px;
+
+}
+.row .leftSpace{
+  height: 100%;
+  width: 422px;
+  background: #FDC8C8;
+  border-radius: 13px 0px 0px 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.loggedin{
+  display: flex;
+}
+.leftSpace p{
+  font-family: Salsa;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+}
+.head{
+  font-size: 36px;
+}
+.agreement{
+  margin-top: 25px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+.user-agreement{
+  padding-left: 10px;
+  font-family: Salsa;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+}
+.row .rightSpace{
+  padding-left: 25px;
+  padding-top: 30px;
+}
+.logo{
+  position: absolute;
+  width: 111px;
+  height: 44px;
+  left: 10%;
+  font-family: Salsa;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 44px;
+
+  color: #000000;
+}
+.lower{
+  margin-top: 270px;
+  text-align: center;
+  font-family: Salsa;
+}
+.lower a{
+  font-family: Salsa;
+  cursor: pointer;
+  color: #AAAAAA;
+}
+.login{
+  margin-left: 65%;
+  margin-top: -15px;
+  width: 156.93px;
+  cursor: pointer;
+  height: 44px;
+  font-family: Salsa;
+  /* background: #000000; */
+  border-radius: 9px;
+  color: white;
+  background-color: black;
+  font-family: Salsa;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-input{
+  position:absolute;
+  margin-left: 620px;
+  top: 10px;
+  font-size: 16px;
+  font-family: Salsa;
+  padding-left: 25px;
+  width: 500px;
+  height: 34px;
+  border-radius: 13px;
+}
+.order{
+  margin-left: 5px;
+  margin-top: -15px;
+  width: 156.93px;
+  cursor: pointer;
+  height: 44px;
+  font-family: Salsa;
+  border-radius: 9px;
+  color: black;
+  background-color: white;
+  font-family: Salsa;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order:hover{
+  color: white;
+  background-color: #000000;
+}
+.login:hover{
+  color: black;
+  background-color: white;
+}
+.search{
+  position: absolute;
+  width: 38.96px;
+  height: 37.71px;
+  top: 3px;
+  right: 13.2%;
+}
+.cart{
+  color: black;
+}
+.cart-icon{
+  position: absolute;
+  width: 41.13px;
+  height: 37.71px;
+  right : 9%;
+  top: 3px;
+}

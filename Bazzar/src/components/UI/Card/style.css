@@ -1,0 +1,16 @@
+.card{
+    width: 100%;
+    background: #fff;
+    font-family: Salsa;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px 0 !important;
+}
+.children{
+    padding: 0 0px;
+}
+.cardHeader{
+    display: flex;
+    font-family: Salsa;
+    justify-content: space-between;
+    padding: 20px 20px;
+    border-bottom: 1px solid #cecece;
+}
