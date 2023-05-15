@@ -3,14 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addOrder, getAddress } from "../../actions";
 import { getCartItems } from "../../actions/cart.action";
 import Layout from "../../components/Layout";
-import Bazzar from '../../images/logo/Bazzar.png'
-import {
-  Anchor,
-  MaterialButton,
-  MaterialInput,
-} from "../../components/MaterialUI";
-import PriceDetails from "../../components/PriceDetails";
-import Card from "../../components/UI/Card";
+import Bazzar from "../../images/logo/Bazzar.png";
+import { Anchor, Button, Input } from "antd";
+// import PriceDetails from "../../components/PriceDetails";
+import { Card } from "antd";
 import axiosInstance from "../../helpers/axios";
 import CartPage from "../CartPage/CartPage";
 import AddressForm from "./AddressForm";
@@ -30,8 +26,12 @@ const CheckoutStep = (props) => {
         className={`checkoutHeader ${props.active && "active"}`}
       >
         <div>
-          <span className="stepNumber" style={{ fontFamily: 'Salsa' }}>{props.stepNumber}</span>
-          <span className="stepTitle" style={{ fontFamily: 'Salsa' }}>{props.title}</span>
+          <span className="stepNumber" style={{ fontFamily: "Salsa" }}>
+            {props.stepNumber}
+          </span>
+          <span className="stepTitle" style={{ fontFamily: "Salsa" }}>
+            {props.title}
+          </span>
         </div>
       </div>
       {props.body && props.body}
@@ -55,7 +55,7 @@ const Address = ({
         {!adr.edit ? (
           <div style={{ width: "100%" }}>
             <div className="addressDetail">
-              <div style={{ fontFamily: 'Salsa' }}>
+              <div style={{ fontFamily: "Salsa" }}>
                 <span className="addressName">{adr.name}</span>
                 <span className="addressType">{adr.addressType}</span>
                 <span className="addressMobileNumber">{adr.mobileNumber}</span>
@@ -75,7 +75,7 @@ const Address = ({
               {adr.address} <br /> {`${adr.state} - ${adr.pinCode}`}
             </div>
             {adr.selected && (
-              <MaterialButton
+              <Button
                 title="DELIVERY HERE"
                 onClick={() => confirmDeliveryAddress(adr)}
                 style={{
@@ -90,7 +90,7 @@ const Address = ({
             withoutLayout={true}
             onSubmitForm={onAddressSubmit}
             initialData={adr}
-            onCancel={() => { }}
+            onCancel={() => {}}
           />
         )}
       </div>
@@ -109,7 +109,7 @@ const CheckoutPage = (props) => {
   const [orderConfirmation, setOrderConfirmation] = useState(false);
   const [paymentOption, setPaymentOption] = useState(false);
   const [confirmOrder, setConfirmOrder] = useState(false);
-  const [paymentType,setPaymentType] = useState('');
+  const [paymentType, setPaymentType] = useState("");
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const onAddressSubmit = (addr) => {
@@ -148,60 +148,60 @@ const CheckoutPage = (props) => {
   };
   function loadScript(src) {
     return new Promise((resolve) => {
-      const script = document.createElement('script');
-      script.src = src
+      const script = document.createElement("script");
+      script.src = src;
       document.body.appendChild(script);
       script.onload = () => {
         resolve(true);
-      }
+      };
       script.onerror = () => {
         resolve(false);
-      }
-    })
-  
+      };
+    });
   }
   async function displayRazorPay(amount) {
-    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
     if (!res) {
-      alert('RazorPay SDK Failed!')
-      return
+      alert("RazorPay SDK Failed!");
+      return;
     }
-    const __DEV__ = document.domain === 'localhost'
+    const __DEV__ = document.domain === "localhost";
 
-    const data=await axiosInstance.post(`/razorpay`);
-    console.log(data)
+    const data = await axiosInstance.post(`/razorpay`);
+    console.log(data);
 
     var options = {
-      "key": __DEV__ ? "rzp_test_1uSZtulaxqyohC" : "PRODUCTION_KEY",
-      "amount": amount,
-      "currency": data.currency,
-      "name": "Bazzar",
-      "description": "ThankYou For Shopping.",
-      "image": { Bazzar },
-      "order_id": data.id,
-      "handler": function (response) {
+      key: __DEV__ ? "rzp_test_1uSZtulaxqyohC" : "PRODUCTION_KEY",
+      amount: amount,
+      currency: data.currency,
+      name: "Bazzar",
+      description: "ThankYou For Shopping.",
+      image: { Bazzar },
+      order_id: data.id,
+      handler: function (response) {
         alert(response.razorpay_payment_id);
         alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
+        alert(response.razorpay_signature);
       },
-      "prefill": {
-        "name": auth.user.firstName+auth.user.lastName,
-        "email": auth.user.email,
-        "contact": auth.user.phone?auth.user.phone:''
+      prefill: {
+        name: auth.user.firstName + auth.user.lastName,
+        email: auth.user.email,
+        contact: auth.user.phone ? auth.user.phone : "",
       },
-      "notes": {
-        "address": "Razorpay Corporate Office"
+      notes: {
+        address: "Razorpay Corporate Office",
       },
-      "theme": {
-        "color": "#3399cc"
-      }
+      theme: {
+        color: "#3399cc",
+      },
     };
-    const paymentObject=new window.Razorpay(options);
+    const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
-  console.log(auth.user.firstName);  
+  console.log(auth.user.firstName);
   const onConfirmOrder = async () => {
-
     const totalAmount = Object.keys(cart.cartItems).reduce(
       (totalPrice, key) => {
         const { price, qty } = cart.cartItems[key];
@@ -214,8 +214,7 @@ const CheckoutPage = (props) => {
       payablePrice: cart.cartItems[key].price,
       purchasedQty: cart.cartItems[key].qty,
     }));
-    if(paymentType === 'card')
-      await displayRazorPay(totalAmount);
+    if (paymentType === "card") await displayRazorPay(totalAmount);
     const payload = {
       addressId: selectedAddress._id,
       totalAmount,
@@ -225,7 +224,7 @@ const CheckoutPage = (props) => {
     };
     dispatch(addOrder(payload));
     setConfirmOrder(true);
-    props.history.push('/account/orders');
+    props.history.push("/account/orders");
   };
 
   useEffect(() => {
@@ -262,12 +261,29 @@ const CheckoutPage = (props) => {
             body={
               auth.authenticate ? (
                 <div className="loggedInId">
-                  <span style={{ fontWeight: 500, fontSize: '16px', fontFamily: 'Salsa' }}>{auth.user.fullName}</span>
-                  <span style={{ margin: "0 5px", fontWeight: 100, fontSize: '14px', fontFamily: 'Salsa' }}>{auth.user.email}</span>
+                  <span
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "16px",
+                      fontFamily: "Salsa",
+                    }}
+                  >
+                    {auth.user.fullName}
+                  </span>
+                  <span
+                    style={{
+                      margin: "0 5px",
+                      fontWeight: 100,
+                      fontSize: "14px",
+                      fontFamily: "Salsa",
+                    }}
+                  >
+                    {auth.user.email}
+                  </span>
                 </div>
               ) : (
                 <div>
-                  <MaterialInput label="Email" />
+                  <Input label="Email" />
                 </div>
               )
             }
@@ -279,7 +295,10 @@ const CheckoutPage = (props) => {
             body={
               <>
                 {confirmAddress ? (
-                  <div className="stepCompleted" style={{ fontFamily: 'Salsa' }}>{`${selectedAddress.name} ${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
+                  <div
+                    className="stepCompleted"
+                    style={{ fontFamily: "Salsa" }}
+                  >{`${selectedAddress.name} ${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
                 ) : (
                   address.map((adr) => (
                     <Address
@@ -297,7 +316,7 @@ const CheckoutPage = (props) => {
 
           {/* AddressForm */}
           {confirmAddress ? null : newAddress ? (
-            <AddressForm onSubmitForm={onAddressSubmit} onCancel={() => { }} />
+            <AddressForm onSubmitForm={onAddressSubmit} onCancel={() => {}} />
           ) : auth.authenticate ? (
             <CheckoutStep
               stepNumber={"+"}
@@ -335,11 +354,13 @@ const CheckoutPage = (props) => {
                   alignItems: "center",
                 }}
               >
-                <p style={{ fontSize: "12px", fontFamily: 'Salsa' }}>
+                <p style={{ fontSize: "12px", fontFamily: "Salsa" }}>
                   Order confirmation email will be sent to{" "}
-                  <strong style={{ fontFamily: 'Salsa' }}>{auth.user.email}</strong>
+                  <strong style={{ fontFamily: "Salsa" }}>
+                    {auth.user.email}
+                  </strong>
                 </p>
-                <MaterialButton
+                <Button
                   title="CONTINUE"
                   onClick={userOrderConfirmation}
                   style={{
@@ -364,12 +385,28 @@ const CheckoutPage = (props) => {
                       padding: "20px",
                     }}
                   >
-                    <input type="radio" name="paymentOption" value="cod" onClick={()=>{setPaymentType('cod')}} />
-                    <div style={{ fontFamily: 'Salsa' }}>Cash on delivery</div>
-                    <input type="radio" name="paymentOption" value="online" onClick={()=>{setPaymentType('card')}} />
-                    <div style={{ fontFamily: 'Salsa' }}>Credit Card/Debit Card/UPI</div>
+                    <input
+                      type="radio"
+                      name="paymentOption"
+                      value="cod"
+                      onClick={() => {
+                        setPaymentType("cod");
+                      }}
+                    />
+                    <div style={{ fontFamily: "Salsa" }}>Cash on delivery</div>
+                    <input
+                      type="radio"
+                      name="paymentOption"
+                      value="online"
+                      onClick={() => {
+                        setPaymentType("card");
+                      }}
+                    />
+                    <div style={{ fontFamily: "Salsa" }}>
+                      Credit Card/Debit Card/UPI
+                    </div>
                   </div>
-                  <MaterialButton
+                  <Button
                     title="CONFIRM ORDER"
                     onClick={onConfirmOrder}
                     style={{
@@ -384,7 +421,7 @@ const CheckoutPage = (props) => {
         </div>
 
         {/* Price Component */}
-        <PriceDetails
+        {/* <PriceDetails
           totalItem={Object.keys(cart.cartItems).reduce(function (qty, key) {
             return qty + cart.cartItems[key].qty;
           }, 0)}
@@ -392,9 +429,11 @@ const CheckoutPage = (props) => {
             const { price, qty } = cart.cartItems[key];
             return totalPrice + price * qty;
           }, 0)}
-        />
+        /> */}
       </div>
-      <div><Footer/></div>
+      <div>
+        <Footer />
+      </div>
     </>
   );
 };

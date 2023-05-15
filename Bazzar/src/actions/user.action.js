@@ -1,38 +1,36 @@
-import axios from '../helpers/axios';
-import { cartConstants, userConstants } from './constants';
+import axios from "../helpers/axios";
+import { cartConstants, userConstants } from "./constants";
 
 export const getAddress = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
-      const res = await axios.post('user/getaddress');
+      const res = await axios.post("user/getaddress");
       dispatch({ type: userConstants.GET_USER_ADDRESS_REQUEST });
       if (res.status === 200) {
         const {
-          userAddress: {
-            address
-          }, } = res.data;
+          userAddress: { address },
+        } = res.data;
         dispatch({
           type: userConstants.GET_USER_ADDRESS_SUCCESS,
-          payload: { address }
+          payload: { address },
         });
       } else {
         const { error } = res.data;
         dispatch({
           type: userConstants.GET_USER_ADDRESS_FAILURE,
-          payload: { error }
-        })
+          payload: { error },
+        });
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const addAddress = (payload) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
-      const res = await axios.post('/user/address/create', { payload })
+      const res = await axios.post("/user/address/create", { payload });
       dispatch({ type: userConstants.ADD_USER_ADDRESS_REQUEST });
       if (res.status === 201) {
         const {
@@ -41,20 +39,19 @@ export const addAddress = (payload) => {
         dispatch({
           type: userConstants.ADD_USER_ADDRESS_SUCCESS,
           payload: { address },
-        })
-      }
-      else {
+        });
+      } else {
         const { error } = res.data;
         dispatch({
           type: userConstants.ADD_USER_ADDRESS_FAILURE,
-          payload: { error }
-        })
+          payload: { error },
+        });
       }
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 export const addOrder = (payload) => {
   return async (dispatch) => {
     try {
@@ -143,27 +140,27 @@ export const getOrder = (payload) => {
 export const signup = (user) => {
   return async (dispatch) => {
     dispatch({
-      type: userConstants.USER_REGISTER_REQUEST
+      type: userConstants.USER_REGISTER_REQUEST,
     });
     const res = await axios.post(`/signup`, {
-      ...user
-    })
+      ...user,
+    });
 
     if (res.status === 201) {
       const { message } = res.data;
       dispatch({
         type: userConstants.USER_REGISTER_SUCCESS,
         payload: {
-          message
-        }
-      })
+          message,
+        },
+      });
     } else {
       if (res.status === 400) {
         dispatch({
           type: userConstants.USER_REGISTER_FAILURE,
-          payload: { error: res.data.error }
-        })
+          payload: { error: res.data.error },
+        });
       }
     }
-  }
-}
+  };
+};

@@ -1,20 +1,20 @@
-
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsBySlug } from "../../../actions";
-import Card from "../../../components/UI/Card";
+import { Card } from "antd";
 import { BiRupee } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import "./style.css";
+import { generatePublicUrl } from "../../../urlconfig";
 
-const ClothingAndAccessories=(props)=> {
-    const product = useSelector((state) => state.product);
+const ClothingAndAccessories = (props) => {
+  const params = useParams();
+  const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const { match } = props;
-    dispatch(getProductsBySlug(match.params.slug));
+    dispatch(getProductsBySlug(params.slug));
   }, []);
 
   return (
@@ -26,26 +26,32 @@ const ClothingAndAccessories=(props)=> {
           display: "flex",
         }}
       >
-        {product.products.map((product) => (
-          <div className="caContainer">
-            <Link
-              className="caImgContainer"
-              to={`/${product.slug}/${product._id}/p`}
-            >
-              <img src={product.productPictures[0].img} />
-            </Link>
-            <div>
-              <div className="caProductName">{product.name}</div>
-              <div className="caProductPrice">
-                <BiRupee />
-                {product.price}
+        {product.products.map((product) => {
+          console.log(product);
+          return (
+            <div className="caContainer">
+              <Link
+                className="caImgContainer"
+                to={`/${product.slug}/${product._id}`}
+              >
+                <img
+                  src={generatePublicUrl(product?.productPictures[0]?.img)}
+                  alt={product.name}
+                />
+              </Link>
+              <div>
+                <div className="caProductName">{product.name}</div>
+                <div className="caProductPrice">
+                  <BiRupee />
+                  {product.price}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </Card>
     </div>
   );
-}
+};
 
-export default ClothingAndAccessories
+export default ClothingAndAccessories;

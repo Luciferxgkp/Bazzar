@@ -1,15 +1,13 @@
-import React from 'react'
-import { IoIosArrowForward } from 'react-icons/io';
-import Header from '../Header/header';
-import { Breed } from '../MaterialUI';
-import Menuheader from '../MenuHeader/menuheader';
+import React from "react";
+import Menuheader from "../MenuHeader/menuheader";
+import Header from "../Header";
 function Layout() {
-    return (
-        <div>
-            <Header/>
-            <Menuheader/>
-        </div>
-    )
+  return (
+    <div>
+      <Header />
+      <Menuheader />
+    </div>
+  );
 }
 
-export default Layout
+export default Layout;

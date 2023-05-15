@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "../../actions";
-import { MaterialButton, MaterialInput } from "../../components/MaterialUI";
+import { Button, Input } from "antd";
 
 /**
  * @author
@@ -101,14 +101,14 @@ const AddressForm = (props) => {
       <>
         <div className="flexRow">
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="10-digit mobile number"
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.target.value)}
@@ -117,14 +117,14 @@ const AddressForm = (props) => {
         </div>
         <div className="flexRow">
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="Pincode"
               value={pinCode}
               onChange={(e) => setPinCode(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="Locality"
               value={locality}
               onChange={(e) => setLocality(e.target.value)}
@@ -133,7 +133,7 @@ const AddressForm = (props) => {
         </div>
         <div className="flexRow">
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="Address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -143,14 +143,14 @@ const AddressForm = (props) => {
 
         <div className="flexRow">
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="City/District/Town"
               value={cityDistrictTown}
               onChange={(e) => setCityDistrictTown(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="State"
               value={state}
               onChange={(e) => setState(e.target.value)}
@@ -159,22 +159,22 @@ const AddressForm = (props) => {
         </div>
         <div className="flexRow">
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="Landmark (Optional)"
               value={landmark}
               onChange={(e) => setLandmark(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
-            <MaterialInput
+            <Input
               label="Alternate Phone (Optional)"
               value={alternatePhone}
               onChange={(e) => setAlternatePhone(e.target.value)}
             />
           </div>
         </div>
-        <div style={{marginTop:'15px'}}>
-          <label style={{fontFamily:'Salsa'}}>Address Type</label>
+        <div style={{ marginTop: "15px" }}>
+          <label style={{ fontFamily: "Salsa" }}>Address Type</label>
           <div className="flexRow">
             <div>
               <input
@@ -183,7 +183,7 @@ const AddressForm = (props) => {
                 name="addressType"
                 value="home"
               />
-              <span style={{fontFamily:'Salsa'}}>Home</span>
+              <span style={{ fontFamily: "Salsa" }}>Home</span>
             </div>
             <div>
               <input
@@ -192,18 +192,18 @@ const AddressForm = (props) => {
                 name="addressType"
                 value="work"
               />
-              <span style={{fontFamily:'Salsa'}}>Work</span>
+              <span style={{ fontFamily: "Salsa" }}>Work</span>
             </div>
           </div>
         </div>
         <div className="flexRow">
-          <MaterialButton
+          <Button
             title="SAVE AND DELIVER HERE"
             onClick={onAddressSubmit}
             style={{
               width: "250px",
               margin: "20px 0",
-              bgColor:'black'
+              bgColor: "black",
             }}
           />
         </div>
