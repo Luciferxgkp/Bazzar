@@ -8,6 +8,7 @@ import Layout from "../../components/Layout/index";
 import { Card } from "antd";
 import { generatePublicUrl } from "../../urlconfig";
 import "./style.css";
+import SEO from "../../components/SEO";
 
 function Order() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function Order() {
   }, []);
   return (
     <>
+      <SEO title="Orders" />
       <Layout />
       <div
         style={{ fontFamily: "Salsa", fontSize: "24px", textAlign: "Center" }}

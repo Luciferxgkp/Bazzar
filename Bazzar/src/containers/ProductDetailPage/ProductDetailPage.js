@@ -12,6 +12,8 @@ import { generatePublicUrl } from "../../urlconfig";
 import Footer from "../../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { Typography } from "antd";
+import SEO from "../../components/SEO";
+import SimilarItems from "../../components/SimilarItems";
 function ProductDetailPage(props) {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
@@ -35,6 +37,7 @@ function ProductDetailPage(props) {
   }
   return (
     <>
+      <SEO title={product.productDetails.name} />
       <Layout />
       <div
         className="productDescriptionContainer flex flex-col md:flex-row
@@ -206,6 +209,11 @@ function ProductDetailPage(props) {
           </div>
         </div>
       </div>
+      <SimilarItems
+        price={product.productDetails.price}
+        productId={product.productDetails._id}
+        title="Related Products"
+      />
       <Footer />
     </>
   );

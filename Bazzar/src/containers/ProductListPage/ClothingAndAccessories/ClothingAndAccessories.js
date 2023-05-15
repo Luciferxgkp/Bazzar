@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 
 import "./style.css";
 import { generatePublicUrl } from "../../../urlconfig";
+import SEO from "../../../components/SEO";
 
 const ClothingAndAccessories = (props) => {
   const params = useParams();
@@ -18,37 +19,33 @@ const ClothingAndAccessories = (props) => {
   }, []);
 
   return (
-    <div style={{ padding: "10px" }}>
-      <Card
-        style={{
-          boxSizing: "border-box",
-          padding: "10px",
-          display: "flex",
-        }}
-      >
-        {product.products.map((product) => {
-          console.log(product);
-          return (
-            <div className="caContainer">
+    <div className="md:p-10">
+      <SEO title={params.slug} />
+      <Card>
+        <div className="grid">
+          {product.products.map((product) => {
+            return (
               <Link
-                className="caImgContainer"
+                className="caContainer"
                 to={`/${product.slug}/${product._id}`}
               >
-                <img
-                  src={generatePublicUrl(product?.productPictures[0]?.img)}
-                  alt={product.name}
-                />
-              </Link>
-              <div>
-                <div className="caProductName">{product.name}</div>
-                <div className="caProductPrice">
-                  <BiRupee />
-                  {product.price}
+                <div className="caImgContainer">
+                  <img
+                    src={generatePublicUrl(product?.productPictures[0]?.img)}
+                    alt={product.name}
+                  />
                 </div>
-              </div>
-            </div>
-          );
-        })}
+                <div>
+                  <div className="caProductName">{product.name}</div>
+                  <div className="caProductPrice">
+                    &#8377;
+                    {product.price}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </Card>
     </div>
   );

@@ -12,6 +12,8 @@ import CartPage from "../CartPage/CartPage";
 import AddressForm from "./AddressForm";
 import "./style.css";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
+import SEO from "../../components/SEO";
 
 /**
  * @author
@@ -99,6 +101,7 @@ const Address = ({
 };
 
 const CheckoutPage = (props) => {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
   const [newAddress, setNewAddress] = useState(false);
@@ -224,7 +227,7 @@ const CheckoutPage = (props) => {
     };
     dispatch(addOrder(payload));
     setConfirmOrder(true);
-    props.history.push("/account/orders");
+    navigate("/account/orders");
   };
 
   useEffect(() => {
@@ -244,12 +247,13 @@ const CheckoutPage = (props) => {
 
   useEffect(() => {
     if (confirmOrder && user.placedOrderId) {
-      props.history.push(`/order_details/${user.placedOrderId}`);
+      navigate(`/order_details/${user.placedOrderId}`);
     }
   }, [user.placedOrderId]);
 
   return (
     <>
+      <SEO title="Checkout" />
       <Layout />
       <div className="cartContainer" style={{ alignItems: "flex-start" }}>
         <div className="checkoutContainer">

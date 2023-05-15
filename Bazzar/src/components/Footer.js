@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigator = useNavigate();
   return (
-    <div className=" mt-auto h-max">
+    <div className="mt-auto h-max">
       <div className="bg-primary">
         <div className="max-w-7xl mx-auto p-4 px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
           <ul className="hidden md:flex justify-center space-x-6">
@@ -46,7 +46,7 @@ const Footer = () => {
             </li>
           </ul>
           <div className="flex justify-center space-x-6">
-            Copyright @ 2023 Techmedd. All Rights Reserved.
+            Copyright @ 2023 Bazzar. All Rights Reserved.
           </div>
         </div>
       </div>

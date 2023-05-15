@@ -10,6 +10,9 @@ import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllProduct } from "../../actions";
+import { Card } from "antd";
+import { generatePublicUrl } from "../../urlconfig";
+import SimilarItems from "../../components/SimilarItems";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -61,61 +64,8 @@ export default function HomePage() {
             </Link>
           ))}
         </Carousel>
-        <div className="row">
-          <Link
-            className="link"
-            to={`/${first ? first.slug : null}/${first ? first._id : null}/p`}
-          >
-            {/* <Rectangle
-              url={generatePublicUrl(
-                first ? first.productPictures[0].img : null
-              )}
-              about={first ? first.name.slice(0, 50) : null}
-              price={first ? first.price : null}
-            /> */}
-          </Link>
-          <Link
-            className="link"
-            to={`/${second ? second.slug : null}/${
-              second ? second._id : null
-            }/p`}
-          >
-            {/* <Rectangle
-              url={generatePublicUrl(
-                second ? second.productPictures[0].img : null
-              )}
-              about={second ? second.name.slice(0, 50) : null}
-              price={second ? second.price : null}
-            /> */}
-          </Link>
-        </div>
-        <div className="row">
-          <Link
-            className="link"
-            to={`/${third ? third.slug : null}/${third ? third._id : null}/p`}
-          >
-            {/* <Rectangle
-              url={generatePublicUrl(
-                third ? third.productPictures[0].img : null
-              )}
-              about={third ? third.name.slice(0, 50) : null}
-              price={third ? third.price : null}
-            /> */}
-          </Link>
-          <Link
-            className="link"
-            to={`/${fourth ? fourth.slug : null}/${
-              fourth ? fourth._id : null
-            }/p`}
-          >
-            {/* <Rectangle
-              url={generatePublicUrl(
-                fourth ? fourth.productPictures[0].img : null
-              )}
-              about={fourth ? fourth.name.slice(0, 50) : null}
-              price={fourth ? fourth.price : null}
-            /> */}
-          </Link>
+        <div className="mt-4">
+          <SimilarItems title="Top Products" />
         </div>
       </div>
       <Footer />

@@ -53,7 +53,9 @@ const Index = () => {
           // onClick={() => navigator("/")}
         >
           <div className="text-xs text-black">Welcome,</div>
-          <div className="text-md text-black text-bold">{userData?.name}</div>
+          <div className="text-md text-black text-bold">
+            {userData?.user?.firstName + " " + userData?.user?.lastName}
+          </div>
         </div>
       ),
       children: [
@@ -105,14 +107,20 @@ const Index = () => {
     },
   ];
   const [items, setItems] = useState(
-    userData ? itemsAfterLogin : itemsBeforeLogin
+    userData.authenticate ? itemsAfterLogin : itemsBeforeLogin
   );
 
   useEffect(() => {
-    if (userData) {
+    if (userData.authenticate) {
       setItems(itemsAfterLogin);
     } else {
       setItems(itemsBeforeLogin);
+    }
+    if (userData.message) {
+      toast.success(userData.message);
+    }
+    if (userData.error) {
+      toast.error(userData.error);
     }
   }, [userData]);
 

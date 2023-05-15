@@ -114,8 +114,8 @@ const Login = ({ _this }) => {
           type="primary"
           htmlType="submit"
           className="
-tracking-wide text-white flex items-center justify-center rounded-full bg-[#00BF62]
-        hover:bg-white hover:text-[#00BF62] hover:border-[#00BF62] border-[#00BF62] hover:shadow-lg
+tracking-wide text-white flex items-center justify-center rounded-full bg-black
+        hover:bg-white hover:text-black hover:border-black border-black hover:shadow-lg
         transition duration-500 ease-in-out h-[35px] w-full"
         >
           Log in
@@ -149,12 +149,24 @@ const Signup = ({ _this }) => {
       autoComplete="off"
     >
       <Form.Item
-        name="name"
-        label="Name"
+        name="firstName"
+        label="First Name"
         rules={[
           {
             required: true,
-            message: "Please input your Name!",
+            message: "Please input your First Name!",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="lastName"
+        label="Last Name"
+        rules={[
+          {
+            required: true,
+            message: "Please input your Last Name!",
           },
         ]}
       >
@@ -216,7 +228,7 @@ const Signup = ({ _this }) => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         name="phone"
         label="Phone Number"
         rules={[
@@ -236,7 +248,7 @@ const Signup = ({ _this }) => {
             width: "100%",
           }}
         />
-      </Form.Item>
+      </Form.Item> */}
 
       {/* <Form.Item
         name="agreement"
@@ -260,13 +272,12 @@ const Signup = ({ _this }) => {
           type="primary"
           htmlType="submit"
           className="
-tracking-wide text-white flex items-center justify-center rounded-full bg-[#00BF62]
-        hover:bg-white hover:text-[#00BF62] hover:border-[#00BF62] border-[#00BF62] hover:shadow-lg
+tracking-wide text-white flex items-center justify-center rounded-full bg-black hover:shadow-lg
         transition duration-500 ease-in-out h-[35px] w-full"
         >
           Sign up
         </Button>
-        Or{" "}
+        Or
         <span
           className="text-pink-600 cursor-pointer"
           onClick={() => {
@@ -316,8 +327,8 @@ const ChangePassword = ({ _this }) => {
           type="primary"
           htmlType="submit"
           className="
-tracking-wide text-white flex items-center justify-center rounded-full bg-[#00BF62]
-        hover:bg-white hover:text-[#00BF62] hover:border-[#00BF62] border-[#00BF62] hover:shadow-lg
+tracking-wide text-white flex items-center justify-center rounded-full bg-black
+        hover:bg-white hover:text-black hover:border-black border-black hover:shadow-lg
         transition duration-500 ease-in-out h-[35px] w-full"
         >
           Send Link

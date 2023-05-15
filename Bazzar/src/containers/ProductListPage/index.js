@@ -29,7 +29,8 @@ const ProductListPage = (props) => {
   return (
     <div>
       <Layout />
-      {renderProduct()}
+      {/* {renderProduct()} */}
+      <ClothingAndAccessories {...props} />
       <Footer />
     </div>
   );
