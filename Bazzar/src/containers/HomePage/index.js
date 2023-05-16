@@ -53,14 +53,18 @@ export default function HomePage() {
     <div>
       <Layout />
       <div className="body">
-        <Carousel>
+        <Carousel className="w-full m-0" showArrows={false}>
           {items.map((item) => (
             <Link
               to={`/${item.slug ? item.slug : null}/${
                 item.id ? item.id : null
-              }/p`}
+              }`}
             >
-              <img key={item.id} src={item.url}></img>
+              <img
+                key={item.id}
+                src={item.url}
+                className="w-full h-96 object-cover"
+              ></img>
             </Link>
           ))}
         </Carousel>

@@ -74,7 +74,7 @@ function CartPage(props) {
     <div>
       <SEO title="Cart" />
       <Layout />
-      {cartItems ? (
+      {Object.keys(cart.cartItems).length > 0 ? (
         <div className="cartContainer">
           <Card
             style={{
@@ -127,13 +127,17 @@ function CartPage(props) {
                     )}
                   </div>
                   <Button
-                    className="text-[14px] text-white flex items-center justify-center rounded-full
+                    className="text-[14px] flex items-center justify-center rounded-full
                             hover:shadow-lg
+                            bg-black text-white
                             transition duration-500 ease-in-out h-[30px] w-[80px]
                           "
                     onClick={handleDiscount}
                   >
-                    <div className="flex items-center justify-center gap-2">
+                    <div
+                      className="flex items-center justify-center gap-2
+                    "
+                    >
                       Apply
                     </div>
                   </Button>
@@ -146,11 +150,13 @@ function CartPage(props) {
                     <h1 className="text-[15px] opacity-90">Subtotal</h1>
                     <h1 className="text-[14px] opacity-90  font-sans">
                       {formatter.format(
-                        Object.keys(cart.cartItems).length > 0
-                          ? Object.keys(cart.cartItems)
-                              .map((item) => item.price * item.qty)
-                              .reduce((a, b) => a + b)
-                          : 0
+                        Object.keys(cart.cartItems).reduce(
+                          (totalPrice, key) => {
+                            const { price, qty } = cart.cartItems[key];
+                            return totalPrice + price * qty;
+                          },
+                          0
+                        )
                       )}
                     </h1>
                   </div>
@@ -165,9 +171,13 @@ function CartPage(props) {
                     <h1 className="text-[14px] opacity-90  font-sans">
                       {formatter.format(
                         Object.keys(cart.cartItems).length > 0
-                          ? Object.keys(cart.cartItems)
-                              .map((item) => item.price * item.qty)
-                              .reduce((a, b) => a + b) *
+                          ? Object.keys(cart.cartItems).reduce(
+                              (totalPrice, key) => {
+                                const { price, qty } = cart.cartItems[key];
+                                return totalPrice + price * qty;
+                              },
+                              0
+                            ) *
                               (discount / 100)
                           : 0
                       )}
@@ -178,12 +188,20 @@ function CartPage(props) {
                     <h1 className="text-[14px] opacity-90 font-sans">
                       {formatter.format(
                         Object.keys(cart.cartItems).length > 0
-                          ? Object.keys(cart.cartItems)
-                              .map((item) => item.price * item.qty)
-                              .reduce((a, b) => a + b) -
-                              Object.keys(cart.cartItems)
-                                .map((item) => item.price * item.qty)
-                                .reduce((a, b) => a + b) *
+                          ? Object.keys(cart.cartItems).reduce(
+                              (totalPrice, key) => {
+                                const { price, qty } = cart.cartItems[key];
+                                return totalPrice + price * qty;
+                              },
+                              0
+                            ) -
+                              Object.keys(cart.cartItems).reduce(
+                                (totalPrice, key) => {
+                                  const { price, qty } = cart.cartItems[key];
+                                  return totalPrice + price * qty;
+                                },
+                                0
+                              ) *
                                 (discount / 100)
                           : 0
                       )}

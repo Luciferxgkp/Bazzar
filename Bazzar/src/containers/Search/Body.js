@@ -1,7 +1,9 @@
 import { Card, Empty, Input, List, Space } from "antd";
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import ProductCard from "../../components/ProductCard";
+import { generatePublicUrl } from "../../urlconfig";
+import "../../containers/ProductListPage/ClothingAndAccessories/style.css";
+import { Link } from "react-router-dom";
 
 const Body = ({ _this }) => {
   return (
@@ -27,57 +29,33 @@ const Body = ({ _this }) => {
           }}
         />
       </div>
-      {_this.data.length > 0 ? (
-        <div className="flex min-h-screen justify-center">
-          <div className="flex h-max w-auto md:w-[60%] lg:w-[70%] items-center">
-            <Card
-              // title={_this.searchValue.toUpperCase()}
-              className={"w-full"}
-              // title={
-              //   <div className="flex md:hidden bg-black w-[15rem]">
-              //     <Input
-              //       prefix={
-              //         <AiOutlineSearch
-              //           size={20}
-              //           className="text-gray-600 opacity-75"
-              //         />
-              //       }
-              //       className="md:flex hidden rounded-full w-full px-4 py-2 outline-none focus:shadow-outline"
-              //       type="text"
-              //       value={_this.searchValue}
-              //       placeholder="Search"
-              //       // onClick={navigator("/search")}
-              //       // onChange={(e) => {
-              //       //   handleSearch(e.target.value);
-              //       // }}
-              //       onBlur={(e) => {
-              //         _this.handleSearch(e.target.value);
-              //       }}
-              //       onPressEnter={(e) => {
-              //         _this.handleSearch(e.target.value);
-              //       }}
-              //     />
-              //   </div>
-              // }
-            >
-              <div className="flex items-center ">
-                <Space size={[8, 16]} wrap align="center">
-                  {_this.data.map((item, index) => (
-                    <ProductCard
-                      onClick={() => _this.navigator(`/product/${item.id}`)}
-                      key={index}
-                      imgUrl={item.image}
-                      id={item.id}
-                      desc={item.desc}
-                      name={item.name}
-                      price={item.price}
+      {_this.product.products.length > 0 ? (
+        <Card>
+          <div className="grid">
+            {_this.product.products.map((product) => {
+              return (
+                <Link
+                  className="caContainer"
+                  to={`/${product.slug}/${product._id}`}
+                >
+                  <div className="caImgContainer">
+                    <img
+                      src={generatePublicUrl(product?.productPictures[0]?.img)}
+                      alt={product.name}
                     />
-                  ))}
-                </Space>
-              </div>
-            </Card>
+                  </div>
+                  <div>
+                    <div className="caProductName">{product.name}</div>
+                    <div className="caProductPrice">
+                      &#8377;
+                      {product.price}
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
-        </div>
+        </Card>
       ) : (
         <div className="flex min-h-screen justify-center">
           <div className="flex h-max w-auto items-center">

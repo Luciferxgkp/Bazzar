@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Footer, Header } from "../../components";
 import Body from "./Body";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import SEO from "../../components/SEO";
 import Layout from "../../components/Layout";
+import { fetchProductsBySearch } from "../../actions";
 
 const Search = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigator = useNavigate();
+  const product = useSelector((state) => state.product);
   const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
     const query = new URLSearchParams(location.search).get("search");
@@ -19,52 +21,7 @@ const Search = () => {
   }, [location.search]);
   useEffect(() => {
     if (searchValue.length < 1) return;
-    // dispatch(loadingStart());
-    // API.database
-    //   .fetchData({
-    //     table: "products",
-    //   })
-    //   .then((res) => {
-    //     let products = res.docs.map((item) => ({
-    //       ...item.data(),
-    //       id: item.id,
-    //     }));
-    //     products.map((item) => {
-    //       API.database
-    //         .fetchData({
-    //           table: "categories",
-    //         })
-    //         .then((res) => {
-    //           let category = res.docs.map((item) => ({
-    //             ...item.data(),
-    //             id: item.id,
-    //           }));
-    //           category = category.filter(
-    //             (item) => item.id === item.category_id
-    //           );
-    //           if (category.length > 0) item.category_name = category[0].name;
-    //         });
-    //     });
-    //     products = products.filter((item) => {
-    //       return (
-    //         item.name
-    //           .toString()
-    //           .toLowerCase()
-    //           .includes(searchValue.toLowerCase()) ||
-    //         (item.brand_name &&
-    //           item.brand_name
-    //             .toLowerCase()
-    //             .includes(searchValue.toLowerCase())) ||
-    //         (item.category_name &&
-    //           item.category_name
-    //             .toLowerCase()
-    //             .includes(searchValue.toLowerCase()))
-    //       );
-    //     });
-    //     console.log(products);
-    //     setData(products);
-    //     dispatch(loadingStop());
-    //   });
+    dispatch(fetchProductsBySearch(searchValue));
   }, [searchValue]);
 
   const handleSearch = (value) => {
@@ -75,7 +32,7 @@ const Search = () => {
     <>
       <SEO
         title={
-          data.length > 0
+          product.products.length > 0
             ? `Search Result for ${searchValue}`
             : "No Result Found"
         }
@@ -93,6 +50,7 @@ const Search = () => {
           searchValue,
           handleSearch,
           navigator,
+          product,
         }}
       />
       <Footer />

@@ -45,9 +45,10 @@ const SimilarItems = ({
               <div
                 className="caContainer cursor-pointer"
                 onClick={() => {
-                  navigate(`/${product.slug}/${product._id}`, {
-                    replace: true,
-                  });
+                  //   navigate(`/${product.slug}/${product._id}`, {
+                  //     replace: true,
+                  //   });
+                  window.location.href = `/${product.slug}/${product._id}`;
                 }}
               >
                 <div className="caImgContainer">

@@ -47,6 +47,7 @@ const Address = ({
   enableAddressEditForm,
   confirmDeliveryAddress,
   onAddressSubmit,
+  onAddressCancel,
 }) => {
   return (
     <div className="flexRow addressContainer">
@@ -84,15 +85,18 @@ const Address = ({
                   width: "200px",
                   margin: "10px 0",
                 }}
-              />
+                className="bg-black w-[250px] mt-4 rounded-full text-white"
+              >
+                DELIVERY HERE{" "}
+              </Button>
             )}
           </div>
         ) : (
           <AddressForm
             withoutLayout={true}
             onSubmitForm={onAddressSubmit}
+            onCancelNewAddress={onAddressCancel}
             initialData={adr}
-            onCancel={() => {}}
           />
         )}
       </div>
@@ -119,6 +123,9 @@ const CheckoutPage = (props) => {
     setSelectedAddress(addr);
     setConfirmAddress(true);
     setOrderSummary(true);
+  };
+  const onAddressCancel = () => {
+    setNewAddress(false);
   };
 
   const selectAddress = (addr) => {
@@ -162,7 +169,7 @@ const CheckoutPage = (props) => {
       };
     });
   }
-  async function displayRazorPay(amount) {
+  async function displayRazorPay(amount, payload) {
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -172,8 +179,9 @@ const CheckoutPage = (props) => {
     }
     const __DEV__ = document.domain === "localhost";
 
-    const data = await axiosInstance.post(`/razorpay`);
-    console.log(data);
+    const data = await axiosInstance.post(`/razorpay`, {
+      amount: amount,
+    });
 
     var options = {
       key: __DEV__ ? "rzp_test_1uSZtulaxqyohC" : "PRODUCTION_KEY",
@@ -184,9 +192,14 @@ const CheckoutPage = (props) => {
       image: { Bazzar },
       order_id: data.id,
       handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
+        payload.paymentStatus = "success";
+        payload.reciept = response.razorpay_payment_id;
+        dispatch(addOrder(payload));
+        setConfirmOrder(true);
+        navigate("/account/orders");
+      },
+      cancel: function (response) {
+        console.log(response);
       },
       prefill: {
         name: auth.user.firstName + auth.user.lastName,
@@ -203,7 +216,6 @@ const CheckoutPage = (props) => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
-  console.log(auth.user.firstName);
   const onConfirmOrder = async () => {
     const totalAmount = Object.keys(cart.cartItems).reduce(
       (totalPrice, key) => {
@@ -217,7 +229,6 @@ const CheckoutPage = (props) => {
       payablePrice: cart.cartItems[key].price,
       purchasedQty: cart.cartItems[key].qty,
     }));
-    if (paymentType === "card") await displayRazorPay(totalAmount);
     const payload = {
       addressId: selectedAddress._id,
       totalAmount,
@@ -225,9 +236,12 @@ const CheckoutPage = (props) => {
       paymentStatus: "pending",
       paymentType,
     };
-    dispatch(addOrder(payload));
-    setConfirmOrder(true);
-    navigate("/account/orders");
+    if (paymentType === "card") await displayRazorPay(totalAmount, payload);
+    else {
+      dispatch(addOrder(payload));
+      setConfirmOrder(true);
+      navigate("/account/orders");
+    }
   };
 
   useEffect(() => {
@@ -258,7 +272,7 @@ const CheckoutPage = (props) => {
       <div className="cartContainer" style={{ alignItems: "flex-start" }}>
         <div className="checkoutContainer">
           {/* check if user logged in or not */}
-          <CheckoutStep
+          {/* <CheckoutStep
             stepNumber={"1"}
             title={"LOGIN"}
             active={!auth.authenticate}
@@ -291,9 +305,9 @@ const CheckoutPage = (props) => {
                 </div>
               )
             }
-          />
+          /> */}
           <CheckoutStep
-            stepNumber={"2"}
+            stepNumber={"1"}
             title={"DELIVERY ADDRESS"}
             active={!confirmAddress && auth.authenticate}
             body={
@@ -310,6 +324,7 @@ const CheckoutPage = (props) => {
                       enableAddressEditForm={enableAddressEditForm}
                       confirmDeliveryAddress={confirmDeliveryAddress}
                       onAddressSubmit={onAddressSubmit}
+                      onCancelNewAddress={onAddressCancel}
                       adr={adr}
                     />
                   ))
@@ -320,7 +335,10 @@ const CheckoutPage = (props) => {
 
           {/* AddressForm */}
           {confirmAddress ? null : newAddress ? (
-            <AddressForm onSubmitForm={onAddressSubmit} onCancel={() => {}} />
+            <AddressForm
+              onSubmitForm={onAddressSubmit}
+              onCancelNewAddress={onAddressCancel}
+            />
           ) : auth.authenticate ? (
             <CheckoutStep
               stepNumber={"+"}
@@ -331,7 +349,7 @@ const CheckoutPage = (props) => {
           ) : null}
 
           <CheckoutStep
-            stepNumber={"3"}
+            stepNumber={"2"}
             title={"ORDER SUMMARY"}
             active={orderSummary}
             body={
@@ -370,13 +388,16 @@ const CheckoutPage = (props) => {
                   style={{
                     width: "200px",
                   }}
-                />
+                  className="bg-black w-[250px] mt-4 rounded-full text-white"
+                >
+                  CONTINUE
+                </Button>
               </div>
             </Card>
           )}
 
           <CheckoutStep
-            stepNumber={"4"}
+            stepNumber={"3"}
             title={"PAYMENT OPTIONS"}
             active={paymentOption}
             body={
@@ -387,6 +408,7 @@ const CheckoutPage = (props) => {
                     style={{
                       alignItems: "center",
                       padding: "20px",
+                      gap: "5px",
                     }}
                   >
                     <input
@@ -417,7 +439,10 @@ const CheckoutPage = (props) => {
                       width: "200px",
                       margin: "0 0 20px 20px",
                     }}
-                  />
+                    className="bg-black w-[250px] mt-4 rounded-full text-white"
+                  >
+                    CONFIRM ORDER
+                  </Button>
                 </div>
               )
             }

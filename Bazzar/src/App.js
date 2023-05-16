@@ -23,8 +23,8 @@ import About from "./containers/About";
 import Contact from "./containers/Contact";
 import RefundPolicy from "./containers/RefundPolicy";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { HelmetProvider } from "react-helmet-async";
-import { StrictMode } from "react";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +43,6 @@ function App() {
 
   return (
     <div className="App">
-      <StrictMode />
       <HelmetProvider>
         <Router>
           <Routes>
@@ -72,18 +71,18 @@ function App() {
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="*" element={<PageNotFound />}></Route>
           </Routes>
-          <ToastContainer
-            position="bottom-center"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable
-            pauseOnHover
-          />
         </Router>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+        />
       </HelmetProvider>
     </div>
   );

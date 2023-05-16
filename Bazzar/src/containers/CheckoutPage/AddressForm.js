@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "../../actions";
 import { Button, Input } from "antd";
+import { toast } from "react-toastify";
 
 /**
  * @author
@@ -45,6 +46,55 @@ const AddressForm = (props) => {
     width: "100%",
     marginRight: 10,
   };
+  const validateAddress = (payload) => {
+    const {
+      name,
+      mobileNumber,
+      pinCode,
+      locality,
+      address,
+      cityDistrictTown,
+      state,
+      addressType,
+    } = payload;
+    if (!name || name === "") {
+      toast.error("Name is required");
+      return false;
+    }
+    if (
+      (!mobileNumber && mobileNumber.length < 10) ||
+      mobileNumber === "" ||
+      mobileNumber.length > 10
+    ) {
+      toast.error("Mobile Number is required");
+      return false;
+    }
+    if (!pinCode || pinCode === "") {
+      toast.error("Pincode is required");
+      return false;
+    }
+    if (!locality || locality === "") {
+      toast.error("Locality is required");
+      return false;
+    }
+    if (!address || address === "") {
+      toast.error("Address is required");
+      return false;
+    }
+    if (!cityDistrictTown || cityDistrictTown === "") {
+      toast.error("City/District/Town is required");
+      return false;
+    }
+    if (!state || state === "") {
+      toast.error("State is required");
+      return false;
+    }
+    if (!addressType || addressType === "") {
+      toast.error("Address Type is required");
+      return false;
+    }
+    return true;
+  };
 
   const onAddressSubmit = (e) => {
     const payload = {
@@ -61,12 +111,13 @@ const AddressForm = (props) => {
         addressType,
       },
     };
-    console.log(payload);
-    if (id) {
-      payload.address._id = id;
+    if (validateAddress(payload.address)) {
+      if (id) {
+        payload.address._id = id;
+      }
+      dispatch(addAddress(payload));
+      setSubmitFlag(true);
     }
-    dispatch(addAddress(payload));
-    setSubmitFlag(true);
   };
 
   useEffect(() => {
@@ -99,75 +150,90 @@ const AddressForm = (props) => {
   const renderAddressForm = () => {
     return (
       <>
-        <div className="flexRow">
+        <div className="flexRow flex-col sm:flex-row">
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>Name</label>
             <Input
-              label="Name"
+              placeholder="Enter Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>
+              10-digit mobile number
+            </label>
             <Input
-              label="10-digit mobile number"
+              placeholder="Enter 10-digit mobile number"
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.target.value)}
             />
           </div>
         </div>
-        <div className="flexRow">
+        <div className="flexRow flex-col sm:flex-row">
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>Pincode</label>
             <Input
-              label="Pincode"
+              placeholder="Enter Pincode"
               value={pinCode}
               onChange={(e) => setPinCode(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>Locality</label>
             <Input
-              label="Locality"
+              placeholder="Enter Locality"
               value={locality}
               onChange={(e) => setLocality(e.target.value)}
             />
           </div>
         </div>
-        <div className="flexRow">
+        <div className="flexRow flex-col sm:flex-row">
           <div style={inputContainer}>
-            <Input
-              label="Address"
+            <label style={{ fontFamily: "Salsa" }}>Address</label>
+            <Input.TextArea
+              placeholder="Enter Address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              rows={2}
             />
           </div>
         </div>
 
-        <div className="flexRow">
+        <div className="flexRow flex-col sm:flex-row">
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>City/District/Town</label>
             <Input
-              label="City/District/Town"
+              placeholder="Enter City/District/Town"
               value={cityDistrictTown}
               onChange={(e) => setCityDistrictTown(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>State</label>
             <Input
-              label="State"
+              placeholder="Enter State"
               value={state}
               onChange={(e) => setState(e.target.value)}
             />
           </div>
         </div>
-        <div className="flexRow">
+        <div className="flexRow flex-col sm:flex-row">
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>Landmark (Optional)</label>
             <Input
-              label="Landmark (Optional)"
+              placeholder="Enter Landmark (Optional)"
               value={landmark}
               onChange={(e) => setLandmark(e.target.value)}
             />
           </div>
           <div style={inputContainer}>
+            <label style={{ fontFamily: "Salsa" }}>
+              {" "}
+              Alternate Phone (Optional)
+            </label>
             <Input
-              label="Alternate Phone (Optional)"
+              placeholder="Enter Alternate Phone (Optional)"
               value={alternatePhone}
               onChange={(e) => setAlternatePhone(e.target.value)}
             />
@@ -175,8 +241,8 @@ const AddressForm = (props) => {
         </div>
         <div style={{ marginTop: "15px" }}>
           <label style={{ fontFamily: "Salsa" }}>Address Type</label>
-          <div className="flexRow">
-            <div>
+          <div className="flexRow flex-col sm:flex-row gap-4">
+            <div className="flex items-center gap-2">
               <input
                 type="radio"
                 onClick={() => setAddressType("home")}
@@ -185,7 +251,7 @@ const AddressForm = (props) => {
               />
               <span style={{ fontFamily: "Salsa" }}>Home</span>
             </div>
-            <div>
+            <div className="flex items-center gap-2">
               <input
                 type="radio"
                 onClick={() => setAddressType("work")}
@@ -198,14 +264,27 @@ const AddressForm = (props) => {
         </div>
         <div className="flexRow">
           <Button
-            title="SAVE AND DELIVER HERE"
+            onClick={() => props.onCancelNewAddress()}
+            // style={{
+            //   width: "250px",
+            //   margin: "20px 0",
+            //   bgColor: "black",
+            // }}
+            className="bg-black w-[250px] mt-4 rounded-full text-white"
+          >
+            CANCEL
+          </Button>
+          <Button
             onClick={onAddressSubmit}
-            style={{
-              width: "250px",
-              margin: "20px 0",
-              bgColor: "black",
-            }}
-          />
+            // style={{
+            //   width: "250px",
+            //   margin: "20px 0",
+            //   bgColor: "black",
+            // }}
+            className="bg-black w-[250px] mt-4 rounded-full text-white"
+          >
+            SAVE AND DELIVER HERE
+          </Button>
         </div>
       </>
     );

@@ -14,6 +14,23 @@ export const getProductsBySlug = (slug) => {
     }
   };
 };
+export const fetchProductsBySearch = (searchValue) => {
+  return async (dispatch) => {
+    dispatch({ type: productConstants.GET_PRODUCTS_BY_SEARCH_REQUEST });
+    const res = await axios.get(`/search/${searchValue}`);
+    if (res.status === 200) {
+      dispatch({
+        type: productConstants.GET_PRODUCTS_BY_SEARCH_SUCCESS,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: productConstants.GET_PRODUCTS_BY_SEARCH_FAILURE,
+        payload: res.data.error,
+      });
+    }
+  };
+};
 
 export const getProductPage = (payload) => {
   return async (dispatch) => {

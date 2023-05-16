@@ -27,13 +27,10 @@ const Categories = ({ _this }) => {
         label: category.name,
         key: category._id,
         onClick: () => {
-          navigate(
-            `/${category.slug}?cid=${category._id}&type=${category.type}`
-          );
-          setSelectedCategory(category._id);
-          console.log(
-            `/${category.slug}?cid=${category._id}&type=${category.type}`
-          );
+          if (category.children.length === 0) {
+            window.location.href = `/${category.slug}?cid=${category._id}&type=${category.type}`;
+            setSelectedCategory(category._id);
+          }
         },
         children:
           category.children.length > 0

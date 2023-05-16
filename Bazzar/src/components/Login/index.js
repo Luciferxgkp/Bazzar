@@ -75,7 +75,7 @@ const Index = () => {
           label: (
             <div
               className="cursor-pointer hover:opacity-70"
-              onClick={() => navigator("/orders")}
+              onClick={() => navigator("/account/orders")}
             >
               Orders
             </div>
