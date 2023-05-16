@@ -5,7 +5,7 @@ const Footer = () => {
   const navigator = useNavigate();
   return (
     <div className="mt-auto h-max">
-      <div className="bg-primary">
+      <div className="bg-white shadow-lg float-bottom">
         <div className="max-w-7xl mx-auto p-4 px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
           <ul className="hidden md:flex justify-center space-x-6">
             <li>
@@ -15,15 +15,6 @@ const Footer = () => {
               >
                 {/* <BsInfoCircle  /> */}
                 <span className="text-center">About Us</span>
-              </div>
-            </li>
-            <li>
-              <div
-                className="flex gap-2 items-center justify-center cursor-pointer hover:opacity-50"
-                onClick={() => navigator("/contact")}
-              >
-                {/* <BsInfoCircle  /> */}
-                <span className="text-center">Contact Us</span>
               </div>
             </li>
             <li>

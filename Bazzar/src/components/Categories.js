@@ -110,12 +110,12 @@ const Categories = ({ _this }) => {
               onClick: () => _this.navigator("/about"),
               icon: <BsInfo />,
             },
-            {
-              key: "Contact Us",
-              label: "Contact Us",
-              onClick: () => _this.navigator("/contact"),
-              icon: <AiOutlinePhone />,
-            },
+            // {
+            //   key: "Contact Us",
+            //   label: "Contact Us",
+            //   onClick: () => _this.navigator("/contact"),
+            //   icon: <AiOutlinePhone />,
+            // },
             {
               key: "Terms",
               label: "Terms of Service",

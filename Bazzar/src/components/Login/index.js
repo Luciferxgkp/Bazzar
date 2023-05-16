@@ -59,17 +59,17 @@ const Index = () => {
         </div>
       ),
       children: [
-        {
-          key: "1",
-          label: (
-            <div
-              className="cursor-pointer hover:opacity-70"
-              onClick={() => navigator("/profile")}
-            >
-              Profile
-            </div>
-          ),
-        },
+        //   {
+        //     key: "1",
+        //     label: (
+        //       <div
+        //         className="cursor-pointer hover:opacity-70"
+        //         onClick={() => navigator("/profile")}
+        //       >
+        //         Profile
+        //       </div>
+        //     ),
+        //   },
         {
           key: "2",
           label: (
@@ -174,6 +174,7 @@ const Index = () => {
   };
   const handleChangePasswordSubmit = (values) => {
     dispatch(forgotPassword(values.email));
+    setLoginPage("login");
   };
   return (
     <>

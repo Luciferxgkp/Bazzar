@@ -188,7 +188,7 @@ const CheckoutPage = (props) => {
       amount: amount,
       currency: data.currency,
       name: "Bazzar",
-      description: "ThankYou For Shopping.",
+      description: "Thank You For Shopping.",
       image: { Bazzar },
       order_id: data.id,
       handler: function (response) {

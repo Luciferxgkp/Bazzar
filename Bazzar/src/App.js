@@ -22,6 +22,7 @@ import TermsOfService from "./containers/TermsOfService";
 import About from "./containers/About";
 import Contact from "./containers/Contact";
 import RefundPolicy from "./containers/RefundPolicy";
+import Profile from "./containers/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { HelmetProvider } from "react-helmet-async";
@@ -56,19 +57,23 @@ function App() {
             {auth.authenticate ? (
               <Route path="/account/orders" element={<Order />}></Route>
             ) : null}
-            <Route
-              path="/:productSlug/:productId"
-              element={<ProductDetailPage />}
-            ></Route>
-            <Route exact path="/:slug" element={<ProductListPage />}></Route>
-            <Route path="/search" element={<Search />} />
             {auth.authenticate ? (
               <Route path="/address" element={<Address />} />
             ) : null}
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
+            {/* <Route path="/contact" element={<Contact />} /> */}
             <Route path="/refund-policy" element={<RefundPolicy />} />
+            {/* {auth.authenticate ? (
+              <Route path="/profile" element={<Profile />} />
+            ) : null} */}
+            <Route
+              exact
+              path="/:productSlug/:productId"
+              element={<ProductDetailPage />}
+            ></Route>
+            <Route exact path="/:slug" element={<ProductListPage />}></Route>
+            <Route path="/search" element={<Search />} />
             <Route path="*" element={<PageNotFound />}></Route>
           </Routes>
         </Router>
