@@ -1,4 +1,4 @@
-export const api = "https://bazzar-backend-5a17.onrender.com/api/";
+export const api = `${process.env.REACT_APP_BACKEND}/api/`;
 export const generatePublicUrl = (fileName) => {
-  return `https://bazzar-backend-5a17.onrender.com/public/${fileName}`;
+  return `${process.env.REACT_APP_BACKEND}/public/${fileName}`;
 };
