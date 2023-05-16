@@ -184,7 +184,7 @@ const CheckoutPage = (props) => {
     });
 
     var options = {
-      key: __DEV__ ? "rzp_test_1uSZtulaxqyohC" : "PRODUCTION_KEY",
+      key: __DEV__ ? process.env.REACT_APP_RAZORPAY_KEY : "PRODUCTION_KEY",
       amount: amount,
       currency: data.currency,
       name: "Bazzar",
