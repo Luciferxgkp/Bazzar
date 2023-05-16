@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import { getAllCategory } from "../../actions";
+import { useNavigate } from "react-router-dom";
 function Menuheader(props) {
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllCategory());
   }, []);
@@ -15,11 +17,15 @@ function Menuheader(props) {
       mycategories.push(
         <li key={category.name}>
           {category.parentId ? (
-            <a
-              href={`/${category.slug}?cid=${category._id}&type=${category.type}`}
+            <div
+              onClick={() => {
+                navigate(
+                  `/${category.slug}?cid=${category._id}&type=${category.type}`
+                );
+              }}
             >
               {category.name}
-            </a>
+            </div>
           ) : (
             <span>{category.name}</span>
           )}
