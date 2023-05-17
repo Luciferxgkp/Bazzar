@@ -48,7 +48,7 @@ const SimilarItems = ({
                   //   navigate(`/${product.slug}/${product._id}`, {
                   //     replace: true,
                   //   });
-                  navigate(`/${product.slug}/${product._id}`);
+                  window.location.href = `/${product.slug}/${product._id}`;
                 }}
               >
                 <div className="caImgContainer">

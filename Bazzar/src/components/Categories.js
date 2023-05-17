@@ -28,9 +28,7 @@ const Categories = ({ _this }) => {
         key: category._id,
         onClick: () => {
           if (category.children.length === 0) {
-            navigate(
-              `/${category.slug}?cid=${category._id}&type=${category.type}`
-            );
+            window.location.href = `/${category.slug}?cid=${category._id}&type=${category.type}`;
             setSelectedCategory(category._id);
           }
         },
